@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Numerics;
 using InoueLab;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace SoundMaker
 {
@@ -16,10 +17,10 @@ namespace SoundMaker
     {
         TrackBar[] trackBars = new TrackBar[7];
 
-        double[] f0 = { 261.63, 293.66, 329.63, 349.23, 391.1, 440.0, 493.88 };
-        double[] freqs = new double[7];
-        double[] freq_power = new double[7];
-        double[] real_freqs;
+        double[] f0 = { 261.63, 293.66, 329.63, 349.23, 391.1, 440.0, 493.88 }; //C4～B4基本周波数
+        double[] freqs = new double[7]; //パワー調整可能周波数
+        double[] freq_power = new double[7]; //トラックバーの値格納
+        double[] real_freqs; //書き込み用ｆ
         double[] wavdata;
 
         int chord_flag = 0;
@@ -36,6 +37,9 @@ namespace SoundMaker
             trackBars[4] = trackBar5;
             trackBars[5] = trackBar6;
             trackBars[6] = trackBar7;
+            for (int i = 0; i < trackBars.Length; i++)
+                trackBars[i].Enabled = false;
+            axWindowsMediaPlayer1.settings.autoStart = false;
         }
         //---------------------------------------------------------------------------
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -46,9 +50,13 @@ namespace SoundMaker
                     chord_flag = i;
                     break;
                 }
+            for (int i = 0; i < trackBars.Length; i++)
+                trackBars[i].Enabled = true;
+            setFreqs();
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            string output_fullpass;
             //folder dialog
             string output_foldername = "";
             FolderBrowserDialog fdb = new FolderBrowserDialog();
@@ -61,16 +69,20 @@ namespace SoundMaker
             if (textBox3.Text == "")
                 MessageBox.Show("出力ファイル名を入力してね", "注意", MessageBoxButtons.YesNo);
             else
-                WaveFile.Save(output_foldername + "\\" + textBox3.Text + ".wav", makeStereo(wavdata), fs);
+            {
+                output_fullpass = output_foldername + "\\" + textBox3.Text + ".wav";
+                WaveFile.Save(output_fullpass, makeStereo(wavdata), fs);
+                axWindowsMediaPlayer1.URL = output_fullpass;
+            }
         }
         private void button2_Click(object sender, EventArgs e)
         {
             checkParameter();
             //ifft
-            Complex[] spect = new Complex[fft_length+1];
-            for (int n = 0; n < fft_length; n++)
+            Complex[] spect = new Complex[fft_length + 1];
+            for (int n = 0; n < spect.Length-1; n++)
                 spect[n] = new Complex(real_freqs[n], 0);
-            spect[fft_length]=new Complex(0,0); //直流成分
+            spect[spect.Length-1] = new Complex(0, 0); //直流成分
 
             MySignalProcessing.SP.Real_IFFT(spect, out wavdata);
 
@@ -89,14 +101,14 @@ namespace SoundMaker
         private void setFreqs()
         {
             double f = f0[chord_flag];
-            foreach (int n in freqs)
+            for (int n = 0; n < freqs.Length; n++)
                 freqs[n] = f * (n + 1);
         }
         //---------------------------------------------------------------------------
         private void setFreqPower()
         {
-            foreach (int n in freq_power)
-                freq_power[n] = trackBars[n].Value; //調整必要
+            for (int n = 0; n < trackBars.Length; n++)
+                freq_power[n] = trackBars[n].Value * 10; //調整必要
         }
         //---------------------------------------------------------------------------
         private void checkParameter()
@@ -109,19 +121,46 @@ namespace SoundMaker
         //---------------------------------------------------------------------------
         private void drawChart()
         {
-            double delta_f = fs / 2 / fft_length;
+            double delta_f = fs / 2.0 / fft_length;
             double[] x = new double[fft_length]; //freq
             double[] y = new double[fft_length]; //power
 
-            foreach (int n in x)
+            for (int n = 0; n < x.Length; n++)
                 x[n] = n * delta_f;
+            int m = 0;
+            for (int n = 0; n < x.Length; n++)
+            {
+
+                if (x[n] <= freqs[m] && freqs[m] < x[n + 1])
+                {
+                    y[n] = freq_power[m];
+                    m++;
+                    if (m == freqs.Length)
+                        break;
+                }
+            }
+            chart1.Series[0].Points.Clear();
+            foreach (double element in y)
+            {
+                chart1.Series[0].Points.Add(new DataPoint(0, element));
+            }
+
+
+            real_freqs = (double[])y.Clone();
         }
         //---------------------------------------------------------------------------
         private double[][] makeStereo(double[] data)
         {
             double[][] output = new double[2][];
-            output[0] = (double[])data.Clone();
-            output[1] = (double[])data.Clone();
+            int data_Length = (int)(fs * double.Parse(textBox4.Text));
+            output[0] = new double[data_Length];
+            output[1] = new double[data_Length];
+
+            for (int i = 0; i < data_Length; i++)
+            {
+                output[0][i] = data[i % data.Length];
+                output[1][i] = data[i % data.Length];
+            }
             return output;
         }
 
@@ -129,5 +168,26 @@ namespace SoundMaker
         {
 
         }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            setFreqPower();
+        }
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            setFreqPower();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            setFreqPower();
+            drawChart();
+        }
+
+        private void axWindowsMediaPlayer1_Enter(object sender, EventArgs e)
+        {
+        }
+
+
     }
 }
