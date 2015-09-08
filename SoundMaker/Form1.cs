@@ -30,6 +30,9 @@ namespace SoundMaker
         public Form1()
         {
             InitializeComponent();
+            textBox1.Text = "44100";
+            textBox2.Text = "1024";
+            textBox4.Text = "2";
             trackBars[0] = trackBar1;
             trackBars[1] = trackBar2;
             trackBars[2] = trackBar3;
@@ -56,6 +59,7 @@ namespace SoundMaker
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            
             string output_fullpass;
             //folder dialog
             string output_foldername = "";
@@ -70,6 +74,7 @@ namespace SoundMaker
                 MessageBox.Show("出力ファイル名を入力してね", "注意", MessageBoxButtons.YesNo);
             else
             {
+                axWindowsMediaPlayer1.URL = "";
                 output_fullpass = output_foldername + "\\" + textBox3.Text + ".wav";
                 WaveFile.Save(output_fullpass, makeStereo(wavdata), fs);
                 axWindowsMediaPlayer1.URL = output_fullpass;
@@ -144,7 +149,7 @@ namespace SoundMaker
             {
                 chart1.Series[0].Points.Add(new DataPoint(0, element));
             }
-
+            chart1.ChartAreas[0].AxisX.Maximum = 500;
 
             real_freqs = (double[])y.Clone();
         }
