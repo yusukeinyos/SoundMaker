@@ -33,6 +33,10 @@ namespace SoundMaker
             textBox1.Text = "44100";
             textBox2.Text = "1024";
             textBox4.Text = "2";
+            fft_length = int.Parse(textBox2.Text);
+            fs = int.Parse(textBox1.Text);
+
+
             trackBars[0] = trackBar1;
             trackBars[1] = trackBar2;
             trackBars[2] = trackBar3;
@@ -174,16 +178,37 @@ namespace SoundMaker
 
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void trackBar1_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             setFreqPower();
+            drawChart();
         }
-        private void trackBar2_Scroll(object sender, EventArgs e)
+        private void trackBar2_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             setFreqPower();
+            drawChart();
         }
-
-        private void button3_Click(object sender, EventArgs e)
+        private void trackBar3_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            setFreqPower();
+            drawChart();
+        }
+        private void trackBar4_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            setFreqPower();
+            drawChart();
+        }
+        private void trackBar5_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            setFreqPower();
+            drawChart();
+        }
+        private void trackBar6_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            setFreqPower();
+            drawChart();
+        }
+        private void trackBar7_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             setFreqPower();
             drawChart();
