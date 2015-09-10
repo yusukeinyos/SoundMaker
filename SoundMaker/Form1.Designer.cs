@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.trackBar2 = new System.Windows.Forms.TrackBar();
@@ -51,7 +51,6 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -76,7 +75,7 @@
             this.trackBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.trackBar1.Size = new System.Drawing.Size(45, 104);
             this.trackBar1.TabIndex = 0;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trackBar1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar1_MouseUp);
             // 
             // trackBar2
             // 
@@ -85,7 +84,7 @@
             this.trackBar2.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.trackBar2.Size = new System.Drawing.Size(45, 104);
             this.trackBar2.TabIndex = 1;
-            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
+            this.trackBar2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar2_MouseUp);
             // 
             // trackBar3
             // 
@@ -94,6 +93,7 @@
             this.trackBar3.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.trackBar3.Size = new System.Drawing.Size(45, 104);
             this.trackBar3.TabIndex = 2;
+            this.trackBar3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar3_MouseUp);
             // 
             // trackBar4
             // 
@@ -102,6 +102,7 @@
             this.trackBar4.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.trackBar4.Size = new System.Drawing.Size(45, 104);
             this.trackBar4.TabIndex = 3;
+            this.trackBar4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar4_MouseUp);
             // 
             // trackBar5
             // 
@@ -110,6 +111,7 @@
             this.trackBar5.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.trackBar5.Size = new System.Drawing.Size(45, 104);
             this.trackBar5.TabIndex = 4;
+            this.trackBar5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar5_MouseUp);
             // 
             // trackBar6
             // 
@@ -118,6 +120,7 @@
             this.trackBar6.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.trackBar6.Size = new System.Drawing.Size(45, 104);
             this.trackBar6.TabIndex = 5;
+            this.trackBar6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar6_MouseUp);
             // 
             // trackBar7
             // 
@@ -126,6 +129,7 @@
             this.trackBar7.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.trackBar7.Size = new System.Drawing.Size(45, 104);
             this.trackBar7.TabIndex = 6;
+            this.trackBar7.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar7_MouseUp);
             // 
             // label1
             // 
@@ -173,7 +177,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(21, 227);
+            this.button2.Location = new System.Drawing.Point(155, 222);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 12;
@@ -258,16 +262,6 @@
             this.label6.TabIndex = 20;
             this.label6.Text = ". wav";
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(146, 227);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 21;
-            this.button3.Text = "Draw";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(155, 304);
@@ -323,7 +317,6 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label5);
@@ -382,7 +375,6 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
