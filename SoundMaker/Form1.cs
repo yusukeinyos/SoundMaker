@@ -33,6 +33,9 @@ namespace SoundMaker
             textBox1.Text = "44100";
             textBox2.Text = "1024";
             textBox4.Text = "2";
+            fs = int.Parse(textBox1.Text);
+            fft_length = int.Parse(textBox2.Text);
+
             trackBars[0] = trackBar1;
             trackBars[1] = trackBar2;
             trackBars[2] = trackBar3;
@@ -47,6 +50,7 @@ namespace SoundMaker
         //---------------------------------------------------------------------------
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            label9.Text = "";
             for (int i = 0; i < comboBox1.Items.Count; i++)
                 if (comboBox1.SelectedIndex == i)
                 {
@@ -90,15 +94,17 @@ namespace SoundMaker
             spect[spect.Length-1] = new Complex(0, 0); //直流成分
 
             MySignalProcessing.SP.Real_IFFT(spect, out wavdata);
-
+            label9.Text = "IFFT has completed.";
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            label9.Text = "";
             if (textBox1.Text != "")
                 fs = int.Parse(textBox1.Text);
         }
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
+            label9.Text = "";
             if (textBox2.Text != "")
                 fft_length = int.Parse(textBox2.Text);
         }
@@ -112,6 +118,7 @@ namespace SoundMaker
         //---------------------------------------------------------------------------
         private void setFreqPower()
         {
+            label9.Text = "";
             for (int n = 0; n < trackBars.Length; n++)
                 freq_power[n] = trackBars[n].Value * 10; //調整必要
         }
