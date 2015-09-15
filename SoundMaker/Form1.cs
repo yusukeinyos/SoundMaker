@@ -152,12 +152,12 @@ namespace SoundMaker
                         break;
                 }
             }
-            chart1.Series[0].Points.Clear();
+            chart2.Series[0].Points.Clear();
             foreach (double element in y)
             {
-                chart1.Series[0].Points.Add(new DataPoint(0, element));
+                chart2.Series[0].Points.Add(new DataPoint(0, element));
             }
-            chart1.ChartAreas[0].AxisX.Maximum = 500;
+            chart2.ChartAreas[0].AxisX.Maximum = 500;
 
             real_freqs = (double[])y.Clone();
         }
